@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Category; // Assuming you have a Category model
+use App\Models\Category;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all(); // Or paginate for better performance
+        $products = Product::all();
         return view('admin.products.index', compact('products'));
     }
 
@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::all(); // Get categories for the dropdown
+        $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }
 
@@ -36,7 +36,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
-        $product->category_id = $request->category; // Save the category_id
+        $product->category_id = $request->category; 
         $product->description = $request->description;
         $product->save();
 
