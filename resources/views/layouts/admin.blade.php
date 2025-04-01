@@ -226,49 +226,81 @@
   </div>
 </header>
 
+
 <div class="container-fluid">
-  <div class="row">
-    <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-      <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="sidebarMenuLabel">Company name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="يغلق"></button>
-        </div>
-        <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                <svg class="bi"><use xlink:href="#house-fill"/></svg>
-                لوحة القيادة
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="admin/categories">
-                <svg class="bi"><use xlink:href="#file-earmark"/></svg>
-                الأصناف
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="admin/products">
-                <svg class="bi"><use xlink:href="#cart"/></svg>
-                المنتجات
-              </a>
-            </li>
+    <div class="row">
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">{{ config('app.name', 'Laravel') }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="يغلق"></button>
+          </div>
+          <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 " aria-current="page" href="{{ route('admin') }}">
+                  <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                  لوحة القيادة
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('home') }}" target="_blank">
+                  <svg class="bi"><use xlink:href="#box-arrow-up-right"/></svg>
+                  زيارة الموقع
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 " href="{{ route('admin.categories.index') }}">
+                  <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                  الأصناف
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 " href="{{ route('admin.products.index') }}">
+                  <svg class="bi"><use xlink:href="#cart"/></svg>
+                  المنتجات
+                </a>
+              </li>
+
+            </ul>
 
 
-          </ul>
+            <hr class="my-3">
+
+            <ul class="nav flex-column mb-auto">
+               @auth
+               <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2 " href="{{ route('profile.show') }}">
+                    <svg class="bi"><use xlink:href="#person-circle"/></svg>
+                    {{ Auth::user()->name }} (الملف الشخصي)
+                  </a>
+                </li>
+               <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form-admin').submit();">
+                  <svg class="bi"><use xlink:href="#door-closed"/></svg>
+                  تسجيل الخروج
+                </a>
+               </li>
+               @endauth
+            </ul>
+
+          </div>
         </div>
       </div>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          @yield('content')
+      </main>
     </div>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-        @yield('content')
-
-    </main>
   </div>
-</div>
-<script src="{{asset('assets/dist/js/bootstrap.bundle.min.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="dashboard.js"></script></body>
-</html>
+  <form id="logout-form-admin" action="{{ route('logout') }}" method="POST" class="d-none">
+      @csrf
+  </form>
+
+  <script src="{{asset('assets/dist/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
+  </body>
+  </html>
